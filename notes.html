@@ -1,313 +1,309 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>NOTES</title>
-</head>
-<style type="text/css">
-	div{
-
-		margin-top: 25px;
-		margin-left: 25px;
-		
-
-	}
-	#del {
-		margin-right: 300px; 
-	}
-
-	#edittext {
-		margin-left: 17px;
-		visibility: hidden;
-		white-space: pre-wrap;
-	}
-
-	#editbtn{
-		visibility: hidden;
-	}
-
-	#priorityAdd{
-		margin-right: 533px;
-	}
-
-	#priorityEdit{
-		visibility: hidden;
-	}
-
-	#label1{
-		visibility: hidden;
-	}
-
-	#label2{
-		visibility: hidden;
-	}
-
-	#del{
-		visibility: hidden;
-	}
-
-	#delnumber{
-		visibility: hidden;
-	}
-
-	#label3{
-		visibility: hidden;
-	}
-
-	#editnumber{
-		visibility: hidden;
-	}
-
-	#chbtn{
-		visibility: hidden;
-	}
-
-	#sortbtn{
-       visibility: hidden;
-	}
-
-
-
-</style>
-<body onload="start()">
-
-     
-    <div id="div1">
-	<label>Notes</label><br>
-	<textarea id = "notetext" rows="3" cols = "80" placeholder="Add notes here..."></textarea>
-	 <button type="button" onclick="addNotes()">ADD</button>
-	 <textarea
-	  id = "edittext"
-	  rows="3"
-	  cols = "80"></textarea>
-	 <button type="button" id = "editbtn" onclick="editNote()">EDIT</button><br>
-	 <label>Set priority of note</label>
-	 <select id="priorityAdd">
-	 	<option value="high" selected="selected">High</option>
-	 	<option value="medium">Medium</option>
-	 	<option value="low">Low</option>
-	 </select>
-	 <label id="label1">Set priority of note</label>
-	 <select id="priorityEdit">
-	 	<option value="high" selected="selected">High</option>
-	 	<option value="medium">Medium</option>
-	 	<option value="low">Low</option>
-	 </select><br><br>
-	 <label id="label2">Select note number to be deleted</label>
-	 <input type="number" id = "delnumber">    
-	 <button type="button" id = "del" onclick="deletoNote()">DELETE</button>
-	 <label id="label3">Select note number to be edited</label>
-	 <input type="number" id = "editnumber">    
-	 <button type="button" id = "chbtn" onclick="showEdit()">CHOOSE</button><br><br>
-	 <button type="button" id="sortbtn" onclick="sort()">SORT</button>
-	</div>
-	<script type="text/javascript">
-
-            
-	     var number = 1;
-	     var eno;
-		function addNotes(){
-			var text = document.getElementById("notetext").value;
-
-			if(text == ""){
-				alert("Please type something");
-				return false;
+		<!DOCTYPE html>
+		<html>
+		<head>
+			<title>NOTES</title>
+		</head>
+		<style type="text/css">
+			#div1{
+				margin-left: 25px;
 			}
-			var x ="Note number " + number + ":\n" + text;
-			
-			document.getElementById("notetext").value="";
-			var op = document.getElementById("priorityAdd");
-			var priority = op.options[op.selectedIndex].text;
-			var par = document.createElement("p");
-			
-			par.style.whiteSpace = "pre-wrap";
-			par.style.border = "1px solid";
-			par.style.width = "660px";
-			if(priority === "High")
-				par.style.backgroundColor = "red";
-			else if(priority === "Medium")
-				par.style.backgroundColor = "yellow";
-			else if(priority === "Low")
-				par.style.backgroundColor = "green";
-			
+			div{
+				margin-top: 25px;
+			}
+			p{
+				margin-top: 10px;
+				margin-bottom: 10px;
+			}
+			#del {
+				margin-right: 300px; 
+			}
+			#edittext {
+				margin-left: 17px;
+				visibility: hidden;
+				white-space: pre-wrap;
+			}
+			#priorityAdd{
+				margin-right: 533px;
+			}
+			.temp{
+				visibility: hidden;
+			}
+			#sortbtn{
+		       visibility: hidden;
+			}
+		</style>
 
-			
-            
-            par.setAttribute("id","note"+number);
-            op.value = 'high';
-            localStorage.setItem("note"+number,x);
-			
-			localStorage.setItem("colour"+number,priority);
-            number = number + 1;
-            localStorage.setItem("number",number);
-			var node = document.createTextNode(x);
-			par.appendChild(node);
+		<body onload="start()">
+		    <div id="div1">
+			<label style="margin-right: 692px">Notes</label>
+			<label class="temp" >Edit Note</label><br>
+			<textarea id = "notetext" rows="3" cols = "80" placeholder="Add notes here..."></textarea>
+			 <button type="button" onclick="addNotes()">ADD</button>
+			 <textarea id = "edittext" class = "temp" rows="3" cols = "80"></textarea>
+			 <button type="button" id = "editbtn" class="temp" onclick="editNote()">EDIT</button><br>
+			 <label>Set priority of note</label>
+			 <select id="priorityAdd">
+			 	<option value="high" selected="selected">High</option>
+			 	<option value="medium">Medium</option>
+			 	<option value="low">Low</option>
+			 </select>
+			 <label class="temp">Set priority of note</label>
+			 <select id="priorityEdit" class="temp">
+			 	<option value="high" selected="selected">High</option>
+			 	<option value="medium">Medium</option>
+			 	<option value="low">Low</option>
+			 </select><br><br>
+			 <button type="button" id="sortbtn" onclick="sort()">SORT</button>
+			</div>
+			<script type="text/javascript">
+		         var number = 1;
+			     var id;
+				 function addNotes(){
+					var text = document.getElementById("notetext").value;
+					if(text == ""){
+						alert("Please type something");
+						return false;
+					}
+					var x = text + "\n";
+					document.getElementById("notetext").value="";
+					var op = document.getElementById("priorityAdd");
+					var priority = op.options[op.selectedIndex].text;
+					var par = document.createElement("p");
+					par.style.whiteSpace = "pre-wrap";
+					par.style.margin = "0px";
+				    op.value = 'high';
+		            localStorage.setItem("note"+number,x);
+					localStorage.setItem("colournote"+number,priority);
+		            
+					var node = document.createTextNode(x);
+					par.appendChild(node);
+					var div = document.createElement("div");
+					div.setAttribute("id","note"+number);
+					div.className += "NoteBox"
+					div.style.border = "1px solid";
+					div.style.width = "660px";
+					if(priority === "High")
+						div.style.backgroundColor = "red";
+					else if(priority === "Medium")
+						div.style.backgroundColor = "yellow";
+					else if(priority === "Low")
+						div.style.backgroundColor = "green";
+					div.appendChild(par);
+					var element = document.getElementById("div1");
+					element.appendChild(div);
+					var btnd = document.createElement("input");
+					btnd.type = "image";
+					btnd.setAttribute("src","del_icon.png");
+					btnd.style.height = "25px";
+					btnd.style.width = "25px";
+					btnd.style.marginLeft = "580px";
+					var dt= document.createTextNode("DEL");
+					btnd.appendChild(dt);
+					div.appendChild(btnd);
+					number = number + 1;
+		            localStorage.setItem("number",number);
+					
+					btnd.onclick = function(){
+						var div = this.parentElement;
+					    div.parentNode.removeChild(div);
+					    localStorage.removeItem(div.id);
+					    localStorage.removeItem("colour"+div.id);
+					    var flag = 0;
+					    for(i = 1; i<=number; i++){
+						  var check = document.getElementById("note"+i);
+						  if(check != null)
+						  {
+							flag=1;
+						  }
+					    }
+					    if(flag == 0){
+						number = 1;
+						document.getElementById("sortbtn").style.visibility = "hidden";
+						
+					   }
+					   localStorage.setItem("number",number);
+					}
 
-			var element = document.getElementById("div1");
-			element.appendChild(par);
-			
+					var btne = document.createElement("input");
+					btne.type = "image";
+					btne.style.marginLeft = "5px"
+					btne.setAttribute("src","edit_icon.png");
+					btne.style.height = "25px";
+					btne.style.width = "25px";
+					div.appendChild(btne);
 
-			document.getElementById('label2').style.visibility = "visible";
-			document.getElementById('label3').style.visibility = "visible";
-			document.getElementById('delnumber').style.visibility = "visible";
-			document.getElementById('del').style.visibility = "visible";
-			document.getElementById('editnumber').style.visibility = "visible";
-			document.getElementById('chbtn').style.visibility = "visible";
-			document.getElementById('sortbtn').style.visibility = "visible";
-		}
-		
+					btne.onclick = function(){
+						var div = this.parentElement;
+						var para = div.childNodes[0]
+						document.getElementById("edittext").value = para.innerHTML;
+					    var edit = document.getElementsByClassName("temp");
+					    for (var i = edit.length - 1; i >= 0; i--) {
+					    	edit[i].style.visibility = "visible";
+					    }
+					    var colour = document.getElementById(div.id).style.backgroundColor;
+					    var op = document.getElementById("priorityEdit");
+					    if(colour == "red")
+						  op.value = "high";
+					    else if(colour == "yellow")
+						  op.value = "medium";
+					    else if(colour == "green")
+						  op.value = "low";
 
-		function deletoNote(){
-			var dno = document.getElementById("delnumber").value
-			var para = document.getElementById("note"+dno);
-			if(para == null)
-            	alert("The note does not exist");
-			para.parentNode.removeChild(para);
-			localStorage.removeItem("note"+dno);
-			localStorage.removeItem("colour"+dno);
-			var i=1;
-			var flag = 0;
-			for(i = 1; i<=number; i++){
-				var check = document.getElementById("note"+i);
-				if(check != null)
-				{
-					flag=1;
+						id = div.id;
+						
+					}
+					document.getElementById("sortbtn").style.visibility = "visible";
 				}
-			}
-			if(flag == 0){
-				number = 1;
-				document.getElementById('label2').style.visibility = "hidden";
-			    document.getElementById('label3').style.visibility = "hidden";
-			    document.getElementById('delnumber').style.visibility = "hidden";
-			    document.getElementById('del').style.visibility = "hidden";
-			    document.getElementById('editnumber').style.visibility = "hidden";
-			    document.getElementById('chbtn').style.visibility = "hidden";
-			    document.getElementById('sortbtn').style.visibility = "hidden";
-			}
-			localStorage.setItem("number",number);
-		}
 
-		function showEdit(){
-		    eno = document.getElementById("editnumber").value;
-			var para = document.getElementById("note"+eno);
-			if(para == null)
-            	alert("The note does not exist");
-			document.getElementById("edittext").value = para.innerHTML;
-			var editText = document.getElementById("edittext");
-			edittext.style.visibility = "visible";
-			
-			
-			var btn = document.getElementById("editbtn");
-			btn.style.visibility = "visible";
+				function addbtnd(){
+					var paras = document.getElementsByClassName("NoteBox");
+					for (var i = 0; i<paras.length; i++) {
+						var btn = document.createElement("input");
+					    btn.type = "image";
+					    btn.setAttribute("src","del_icon.png");
+					    btn.style.height = "25px";
+					    btn.style.width = "25px";
+					    btn.style.marginLeft = "580px";
+					    paras[i].appendChild(btn);
+					    btn.onclick = function(){
+							var par = this.parentElement;
+						    par.parentNode.removeChild(par);
+						    localStorage.removeItem(par.id);
+						    localStorage.removeItem("colour"+par.id);
+						    var flag = 0;
+						    for(i = 1; i<=number; i++){
+							  var check = document.getElementById("note"+i);
+							  if(check != null)
+							  {
+								flag=1;
+							  }
+						    }
+						    if(flag == 0){
+							number = 1;
+							document.getElementById("sortbtn").style.visibility = "hidden";
+						   }
+						   localStorage.setItem("number",number);
+					}
+					}
+				}
 
-			document.getElementById("label1").style.visibility = "visible";
-			var op = document.getElementById("priorityEdit");
-			op.style.visibility = "visible";
-			var colour = document.getElementById("note"+eno).style.backgroundColor;
-			if(colour == "red")
-				op.value = "high";
-			else if(colour == "yellow")
-				op.value = "medium";
-			else if(colour == "green")
-				op.value = "low";
+				function addbtne(){
+					var paras = document.getElementsByClassName("NoteBox");
+					for (var i = 0; i<paras.length; i++) {
+						var btn = document.createElement("input");
+					    btn.type = "image";
+					    btn.style.marginLeft = "5px"
+					    btn.setAttribute("src","edit_icon.png");
+					    btn.style.height = "25px";
+					    btn.style.width = "25px";
+					    paras[i].appendChild(btn);
+						btn.onclick = function(){
+			     			var div = this.parentElement;
+						    var para = div.childNodes[0]
+						    document.getElementById("edittext").value = para.innerHTML;
+					        var op = document.getElementById("priorityEdit");
+						    var colour = document.getElementById(div.id).style.backgroundColor;
+						    if(colour == "red")
+							  op.value = "high";
+						    else if(colour == "yellow")
+							  op.value = "medium";
+						    else if(colour == "green")
+							  op.value = "low";
 
+							id = div.id;
+			                var edit = document.getElementsByClassName("temp");
+							for (var i = edit.length - 1; i >= 0; i--) {
+						    	edit[i].style.visibility = "visible";
+					    }
+					}
 
-		}
+					}
 
-		function editNote(){
-			var x = document.getElementById("edittext").value;
-            var node = document.createTextNode(x);
-            var par = document.getElementById("note"+eno);
-            par.innerHTML = x;
-            var editText = document.getElementById("edittext");
-			edittext.style.visibility = "hidden";
-			var btn = document.getElementById("editbtn");
-			btn.style.visibility = "hidden";
-			document.getElementById("label1").style.visibility = "hidden";
-			var op = document.getElementById("priorityEdit");
-			var priority = op.options[op.selectedIndex].text;
-			localStorage.setItem("note"+eno,x);
-			localStorage.setItem("colour"+eno,priority);
-			if(priority === "High")
-				par.style.backgroundColor = "red";
-			else if(priority === "Medium")
-				par.style.backgroundColor = "yellow";
-			else if(priority === "Low")
-				par.style.backgroundColor = "green";
+				}	
 
-			op.style.visibility = "hidden";
-		}
+				function editNote(){
+					var x = document.getElementById("edittext").value;
+		            var node = document.createTextNode(x);
+		            var div = document.getElementById(id);
+		            var par = div.childNodes[0];
+		            par.innerHTML = x;
+		           	var op = document.getElementById("priorityEdit");
+					var priority = op.options[op.selectedIndex].text;
+					localStorage.setItem(""+div.id,x);
+					localStorage.setItem("colour"+div.id,priority);
+					if(priority === "High")
+						div.style.backgroundColor = "red";
+					else if(priority === "Medium")
+						div.style.backgroundColor = "yellow";
+					else if(priority === "Low")
+						div.style.backgroundColor = "green";
+					var edit = document.getElementsByClassName("temp");
+					    for (var i = edit.length - 1; i >= 0; i--) {
+					    	edit[i].style.visibility = "hidden";
+					    }
+				}
 
-		function sort(){
-			var parent = document.getElementById("div1");
-			var elements = document.getElementsByTagName("p");
-			var i,j;
-			for(i=1;i<elements.length; i++)
-			{
-                for(j=i-1;j>=0;j--){
-                	if(priorityOrder(elements[i])<=priorityOrder(elements[j]))
-                		break;
-                }
-                if(j+1 != i)
-                     parent.insertBefore(elements[i],elements[j+1]);
-                elements = document.getElementsByTagName("p");
-			}
+				function sort(){
+					var parent = document.getElementById("div1");
+					var elements = document.getElementsByClassName("NoteBox");
+					var i,j;
+					for(i=1;i<elements.length; i++)
+					{
+				        for(j=i-1;j>=0;j--){
+		                	if(priorityOrder(elements[i])<=priorityOrder(elements[j]))
+		                		break;
+		                }
+		                if(j+1 != i)
+		                     parent.insertBefore(elements[i],elements[j+1]);
+		                     elements = document.getElementsByClassName("NoteBox");
+					}
+				}
 
-		}
+				function priorityOrder(element)
+				{
+					if(element.style.backgroundColor == "red")
+						return 3;
+					else if(element.style.backgroundColor == "yellow")
+						return 2;
+					else if(element.style.backgroundColor == "green")
+						return 1;
+				}
 
-		function priorityOrder(element)
-		{
-
-			if(element.style.backgroundColor == "red")
-				return 3;
-			else if(element.style.backgroundColor == "yellow")
-				return 2;
-			else if(element.style.backgroundColor == "green")
-				return 1;
-		}
-
-		function start(){
-			var no = localStorage.getItem("number");
-			if(no == null)
-				return false;
-			
-			number = parseInt(no);
-			var i;
-			for(i=1;i<number;i++){
-				var note = localStorage.getItem("note"+i);
-				if(note == null)
-					continue;
-				var priority = localStorage.getItem("colour"+i);
-				var par = document.createElement("p");
-			
-			    par.style.whiteSpace = "pre-wrap";
-			    par.style.border = "1px solid";
-			    par.style.width = "660px";
-
-			    if(priority == "High")
-				   par.style.backgroundColor = "red";
-			    else if(priority == "Medium")
-				   par.style.backgroundColor = "yellow";
-			    else if(priority == "Low")
-				   par.style.backgroundColor = "green";
-                
-                par.innerHTML = note;
-                par.setAttribute("id","note"+i);
-				var element = document.getElementById("div1");
-			    element.appendChild(par);
-
-			    document.getElementById('label2').style.visibility = "visible";
-	     		document.getElementById('label3').style.visibility = "visible";
-		    	document.getElementById('delnumber').style.visibility = "visible";
-		    	document.getElementById('del').style.visibility = "visible";
-			    document.getElementById('editnumber').style.visibility = "visible";
-		    	document.getElementById('chbtn').style.visibility = "visible";
-	     		document.getElementById('sortbtn').style.visibility = "visible";
-
-	     		sort();
-			}
-		}
-
-	</script>
-
-</body>
-</html>
+				function start(){
+					var no = localStorage.getItem("number");
+					if(no == null)
+						return false;
+					number = parseInt(no);
+					var i;
+					for(i=1;i<number;i++){
+						var note = localStorage.getItem("note"+i);
+						if(note == null)
+							continue;
+						document.getElementById("sortbtn").style.visibility = "visible";
+						var priority = localStorage.getItem("colournote"+i);
+						var par = document.createElement("p");
+					    par.style.whiteSpace = "pre-wrap";
+					    par.style.margin = "0px";    
+				        par.innerHTML = note;
+		                var div = document.createElement("div");
+		                div.setAttribute("id","note"+i);
+		                div.className += "NoteBox";
+		                div.style.border = "1px solid";
+					    div.style.width = "660px";
+		                if(priority == "High")
+						   div.style.backgroundColor = "red";
+					    else if(priority == "Medium")
+						   div.style.backgroundColor = "yellow";
+					    else if(priority == "Low")
+						   div.style.backgroundColor = "green";
+		                div.appendChild(par);
+						var element = document.getElementById("div1");
+					    element.appendChild(div);
+	     			}
+					addbtnd();
+					addbtne();
+			        sort();
+				}
+			</script>
+		</body>
+		</html>
