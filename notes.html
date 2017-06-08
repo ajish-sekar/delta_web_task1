@@ -79,7 +79,7 @@
 					par.appendChild(node);
 					var div = document.createElement("div");
 					div.setAttribute("id","note"+number);
-					div.className += "NoteBox"
+					div.className += "NoteBox";
 					div.style.border = "1px solid";
 					div.style.width = "660px";
 					if(priority === "High")
@@ -97,8 +97,6 @@
 					btnd.style.height = "25px";
 					btnd.style.width = "25px";
 					btnd.style.marginLeft = "580px";
-					var dt= document.createTextNode("DEL");
-					btnd.appendChild(dt);
 					div.appendChild(btnd);
 					number = number + 1;
 		            localStorage.setItem("number",number);
